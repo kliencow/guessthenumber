@@ -8,6 +8,7 @@ Many students who want to learn to program want to program games. I find this to
 Using the simplest form of Guess The Number, we will show that we can incrementally grow our game from silly easy and not much fun to something interesting, complex, and fun!
 
 ## This Version
-The master branch is where the bulk of development is taking place. Granted, this is a more traditional form of version control than git is ideally used for, but it works well for this.
+This version is still the same game, but with some extra features. Namely, it does basic IO, try clauses, helper functions, recursion and data validation.
 
-The idea here is that each branch is a differnt form of this same game. Some are more elaborate than others, some are greatly more elaborate creating a game only just barely related to guessing numbers. 
+The new feature for users is that the concept of a high score has been introduced. To accomplish this, persistance had to be considered. We created a file to store the most recent high score (which turns out to be the "low" score since the goal is to guess in as few tries as possible.
+
