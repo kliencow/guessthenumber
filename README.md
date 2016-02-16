@@ -7,3 +7,7 @@ Many students who want to learn to program want to program games. I find this to
 ## Goal
 Using the simplest form of Guess The Number, we will show that we can incrementally grow our game from silly easy and not much fun to something interesting, complex, and fun!
 
+## This Version
+This version is the simplest form of the game that is usable. It allows you to guess numbers and when you do, you win!
+
+All of the other versions of GuessTheNumber are roughly based on extending this basic game file.
