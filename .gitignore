@@ -5,3 +5,6 @@ __pycache__/
 
 # C extensions
 *.so
+
+# game specific temp files
+high_score.txt 
