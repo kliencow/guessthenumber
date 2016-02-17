@@ -10,4 +10,4 @@ Using the simplest form of Guess The Number, we will show that we can incrementa
 ## This Version
 The master branch is where the bulk of development is taking place. Granted, this is a more traditional form of version control than git is ideally used for, but it works well for this.
 
-The idea here is that each branch is a differnt form of this same game. Some are more elaborate than others, some are greatly more elaborate creating a game only just barely related to guessing numbers. 
+The idea here is that each branch is a different form of this same game. Some are more elaborate than others, some are greatly more elaborate creating a game only just barely related to guessing numbers. 
