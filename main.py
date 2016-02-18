@@ -1,6 +1,7 @@
 #!/usr/local/bin/python3
 
 import random, sys
+from gamestate import GameState
 
 """
   A simple game, but with a win condition and high score tracking!
@@ -8,18 +9,14 @@ import random, sys
   We also started to use helper functions, basic IO, simple signal processing, recursion, and even try clauses.
 """
 class Game:
-
     def __init__(self):
-        # the number to try to guess
-        self.number = random.randint(1,100)
-        # the current guess, -1 by default to indicate no guesses
-        self.guess = -1
-        # set the last high score
-        self.high_score = self.__load_high_score()
-        # the current number of tries, which the score in this case
-        self.tries = 0
-        # flag to determine if we should set the first time message for the game
-        self.firstTime = True
+        self.gs = GameState()
+        self.game_on = True
+        self.hits = {
+            "high": self.__hit_high,
+            "low" : self.__hit_low,
+            "on"  : self.__hit_on,
+        }
 
 
     """
@@ -36,63 +33,72 @@ class Game:
             print("That is not a valid number (integer), let alone one between 1 and 100.")
             self.__ask_for_guess()
 
-        self.tries += 1
+    def __hit_location(self):
+        if  self.guess < self.gs.villain.target:
+            return "low"
+        if  self.guess > self.gs.villain.target:
+            return "high"
+        if  self.guess == self.gs.villain.target:
+            return "on"
+
+    def __resolve_guess(self):
+        loc = self.__hit_location()
+        self.hits[loc]()
+
+        if (self.gs.player.life <= 0):
+            self.lose()
+
+
+
+    def __resolve_hit(self):
+        hit = 20 - abs(self.guess - self.gs.villain.target) + random.randint(0,5)
+        if hit < 0:
+            hit = 0
+
+        self.gs.player.life -= hit
+        return hit
+
+    def __hit_low(self):
+        print("You attack was too low!")
+        hit = self.__resolve_hit()
+        print("You got hit for " + str(hit) + " damage! You have " + str(self.gs.player.life) + " life left.")
+
+    def __hit_high(self):
+        print("You attack was too high!")
+        hit = self.__resolve_hit()
+        print("You got hit for " + str(hit) + " damage! You have " + str(self.gs.player.life) + " life left.")
+
+    def __hit_on(self):
+        self.win()
 
 
     """
-    Simple load function to set up previous highscores
+    Do the work to win the game.
     """
-    def __load_high_score(self):
-        try:
-            f = open('high_score.txt', 'r')
-            highscore = int(f.read())
-            f.close()
-            return highscore
-        except:
-            return 0
+    def win(self):
+        print("You got it! You win! You killed " + self.gs.villain.name + ".")
+        self.game_on = False
 
-
-    """
-    Simple storage function to save high scores
-    """
-    def __store_high_score(self):
-        try:
-            f = open('high_score.txt', 'w')
-            f.write(str(self.tries))
-            f.close()
-        except:
-            print("Unable to store highscore... this is odd")
-
-
-    """
-    Do the work to win the game. This includes printing messages and saving highscores
-    """
-    def __win(self):
-        print("You got it! You win! You got it in " + str(self.tries) + " tries.")
-        if  self.tries < self.high_score or self.high_score == 0:
-            print("Congratulations on a new high score! It used to be " + self.high_score)
-            self.__store_high_score()
+    def lose(self):
+        print("OUCH, you are dead. You Lose. Game over. Go home. Get better at guessing.")
+        self.game_on = False
 
 
     """
     The main function to start the game.
     """
     def run(self):
-        # This is a game loop.
-        while True:
-            if self.firstTime:
-                print("Welcome to the game of your life, GUESS THE NUMBER! You have not guessed yet.")
-                print("Guess a number between 1 and 100")
-                self.firstTime = False
-            elif self.guess < self.number:
-                print("Your guess is low.")
-            elif self.guess > self.number:
-                print("Your guess is too high.")
-            else: # guess == number
-                self.__win()
-                break
+        print("Welcome to the rogue-like game of your life, GUESS THE NUMBER, VS! ")
+        print("You have been assinged the name " + self.gs.player.name)
+        print("You will be fighting " + self.gs.villain.name)
+        print("Guess a number between 1 and 100. The closer you are, the harder your opponent hits. Hit him once and you win. Run out of life and you die.")
 
+        while self.game_on:
             self.__ask_for_guess()
+            self.__resolve_guess()
+
+
+
 
 
 """
