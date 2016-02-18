@@ -8,6 +8,6 @@ Many students who want to learn to program want to program games. I find this to
 Using the simplest form of Guess The Number, we will show that we can incrementally grow our game from silly easy and not much fun to something interesting, complex, and fun!
 
 ## This Version
-The master branch is where the bulk of development is taking place. Granted, this is a more traditional form of version control than git is ideally used for, but it works well for this.
+This branch introduces a simple combat mechanism and give the play and his new opponent names! The random name generator is rather fun.
 
-The idea here is that each branch is a different form of this same game. Some are more elaborate than others, some are greatly more elaborate creating a game only just barely related to guessing numbers. 
+This branch is the first branch to really start to take the guess a number game into a weird direction, but still keep it within the same theme as the original.
