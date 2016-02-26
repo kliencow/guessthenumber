@@ -35,7 +35,7 @@ class Game:
     """
     Generate the keys for the hit map!
     """
-    def __hit_location(self):
+    def __hit_location(self) -> str:
         if  self.guess < self.gs.villain.target:
             return "low"
         if  self.guess > self.gs.villain.target:
@@ -59,7 +59,7 @@ class Game:
     """
     After a player guesses and does not hit the target, he gets hit. The closer he is, the harder he's hit.
     """
-    def __resolve_hit(self):
+    def __resolve_hit(self) -> int:
         hit = 20 - abs(self.guess - self.gs.villain.target) + random.randint(0,5)
         if hit < 0:
             hit = 0
