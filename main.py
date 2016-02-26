@@ -70,7 +70,7 @@ class Game:
     def __win(self):
         print("You got it! You win! You got it in " + str(self.tries) + " tries.")
         if  self.tries < self.high_score or self.high_score == 0:
-            print("Congratulations on a new high score! It used to be " + self.high_score)
+            print("Congratulations on a new high score! It used to be " + str(self.high_score))
             self.__store_high_score()
 
 
